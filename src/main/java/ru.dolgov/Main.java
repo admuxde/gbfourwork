@@ -41,14 +41,43 @@ public class Main {
     }
 
     public static boolean isWinCheck(char symb) {
-        if (map[0][0] == symb && map[0][1] == symb && map[0][2] == symb) return true;
-        if (map[1][0] == symb && map[1][1] == symb && map[1][2] == symb) return true;
-        if (map[2][0] == symb && map[2][1] == symb && map[2][2] == symb) return true;
-        if (map[0][0] == symb && map[1][0] == symb && map[2][0] == symb) return true;
-        if (map[0][1] == symb && map[1][1] == symb && map[2][1] == symb) return true;
-        if (map[0][2] == symb && map[1][2] == symb && map[2][2] == symb) return true;
-        if (map[0][0] == symb && map[1][1] == symb && map[2][2] == symb) return true;
-        if (map[2][0] == symb && map[1][1] == symb && map[0][2] == symb) return true;
+        for (int row = 0; row < SIZE; row++) {
+            int counter = 0;
+            for (int col = 0; col < SIZE; col++) {
+                if (map[row][col] == symb) counter++;
+            }
+            if (counter == SIZE) {
+                return true;
+            }
+        }
+        for (int col = 0; col < SIZE; col++) {
+            int counter = 0;
+            for (int row = 0; row < SIZE; row++) {
+                if (map[row][col] == symb) counter++;
+            }
+            if (counter == SIZE) {
+                return true;
+            }
+        }
+
+        int counter = 0;
+        for (int i = 0; i < SIZE; i++) {
+            if (map[i][i] == symb) {
+                counter++;
+            }
+            if (counter == SIZE) {
+                return true;
+            }
+        }
+        counter = 0;
+        for (int i = 0; i < SIZE; i++) {
+            if (map[i][SIZE-1-i] == symb) {
+                counter++;
+            }
+            if (counter == SIZE) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -70,14 +99,14 @@ public class Main {
             y = random.nextInt(SIZE);
         } while (!isCellValid(x, y));
         System.out.println(x + 1 + " " + y + 1);
-        map[y][x] = O;
+        map[x][y] = O;
     }
 
     public static boolean isCellValid(int x, int y) {
         if (x < 0 || x >= SIZE || y < 0 || y >= SIZE) {
             return false;
         }
-        if (map[y][x] == EMPETY) {
+        if (map[x][y] == EMPETY) {
             return true;
         }
         return false;
@@ -90,7 +119,7 @@ public class Main {
             x = scanner.nextInt() - 1;
             y = scanner.nextInt() - 1;
         } while (!isCellValid(x, y));
-        map[y][x] = X;
+        map[x][y] = X;
     }
 
     public static void initMap() {
